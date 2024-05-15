@@ -29,7 +29,7 @@ final class Presenter: InteractorOutput, ObservableObject {
     }
   }
 
-  func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
+  nonisolated func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
     print("presenter heavy work")
     print("isMainThread: \(Thread.current.isMainThread)\n")
     let postsLightViewData = posts.map {
