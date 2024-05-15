@@ -23,7 +23,7 @@ final class Interactor: InteractorInput {
 
   func fetchData() async {
     print("interactor fetchData")
-    print("isMainThread: \(Thread.current.isMainThread)")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let postsData = await worker.fetchRandomStuff()
     let posts = postsData.map {

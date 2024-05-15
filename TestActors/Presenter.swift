@@ -19,13 +19,25 @@ final class Presenter: InteractorOutput, ObservableObject {
     print("init \(self)")
   }
 
-  func format(posts: [Post]) {
+  func format(posts: [Post]) async {
     print("presenter format")
-    print("isMainThread: \(Thread.current.isMainThread)")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
-    self.posts = posts.map {
+    let presentationReadyPosts = await heavyProcess(posts: posts)
+    self.posts = presentationReadyPosts.map {
       PostLightViewData(id: $0.id, title: String($0.title[0...10]))
     }
+  }
+
+  func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
+    print("presenter heavy work")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
+    let postsLightViewData = posts.map {
+      PostLightViewData(id: $0.id, title: String($0.title[0...10]))
+    }
+    let reorderedposts = postsLightViewData.shuffled().shuffled().shuffled().shuffled().shuffled().shuffled().shuffled()
+
+    return reorderedposts
   }
 
   deinit {
