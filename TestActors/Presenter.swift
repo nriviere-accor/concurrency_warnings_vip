@@ -7,11 +7,11 @@
 
 import Foundation
 
-@MainActor
 protocol InteractorOutput: Sendable, AnyObject {
-  func format(posts: [Post])
+  func format(posts: [Post]) async
 }
 
+@MainActor
 final class Presenter: InteractorOutput, ObservableObject {
   @Published private(set) var posts: [PostLightViewData] = []
 
