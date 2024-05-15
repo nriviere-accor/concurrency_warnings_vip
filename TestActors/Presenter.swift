@@ -7,11 +7,11 @@
 
 import Foundation
 
+@MainActor
 protocol InteractorOutput: Sendable, AnyObject {
   func format(posts: [Post]) async
 }
 
-@MainActor
 final class Presenter: InteractorOutput, ObservableObject {
   @Published private(set) var posts: [PostLightViewData] = []
 
@@ -29,7 +29,7 @@ final class Presenter: InteractorOutput, ObservableObject {
     }
   }
 
-  nonisolated func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
+  func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
     print("presenter heavy work")
     print("isMainThread: \(Thread.current.isMainThread)\n")
     let postsLightViewData = posts.map {
