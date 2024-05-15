@@ -8,17 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+  let interactor: Interactor
+  @StateObject var presenter: Presenter
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+      ContentViewBody(posts: presenter.posts)
+        .task {
+          await interactor.fetchData()
         }
-        .padding()
     }
 }
 
+struct ContentViewBody: View {
+  let posts: [Presenter.PostLightViewData]
+  var body: some View {
+    List(posts) { post in
+      HStack {
+        Text(post.id)
+        Spacer()
+        Text(post.title)
+      }
+    }
+  }
+}
+
 #Preview {
-    ContentView()
+  ContentViewBody(posts: [
+    .init(id: "1", title: "Test"),
+    .init(id: "2", title: "Test another title")
+  ])
 }

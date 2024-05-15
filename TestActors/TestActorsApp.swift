@@ -11,7 +11,20 @@ import SwiftUI
 struct TestActorsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          MainView()
         }
     }
+}
+
+struct MainView: View {
+  var body: some View {
+    NavigationStack {
+      VStack {
+        NavigationLink("Go to list", value: UUID())
+      }
+      .navigationDestination(for: UUID.self) { _ in
+        Factory().makeView()
+      }
+    }
+  }
 }
