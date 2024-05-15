@@ -7,20 +7,18 @@
 
 import Foundation
 
+@MainActor
 protocol InteractorOutput: Sendable, AnyObject {
-  @MainActor
   func format(posts: [Post])
 }
 
 final class Presenter: InteractorOutput, ObservableObject {
-  @Published var posts: [PostLightViewData]
+  @Published private(set) var posts: [PostLightViewData] = []
 
   init() {
-    self.posts = []
     print("init \(self)")
   }
 
-  @MainActor
   func format(posts: [Post]) {
     print("presenter format")
     print("isMainThread: \(Thread.current.isMainThread)")
