@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol InteractorInput: Sendable {
+protocol Solution2InteractorInput {
   func fetchData() async
 }
-final class Interactor: InteractorInput {
+final class Solution2Interactor: Solution2InteractorInput {
   let worker: Worker
-  let presenter: InteractorOutput
+  let presenter: Solution2InteractorOutput
 
-  init(worker: Worker, presenter: InteractorOutput) {
+  init(worker: Worker, presenter: Solution2InteractorOutput) {
     self.worker = worker
     self.presenter = presenter
 
@@ -22,8 +22,8 @@ final class Interactor: InteractorInput {
   }
 
   func fetchData() async {
-    print("interactor fetchData")
-    print("isMainThread: \(Thread.current.isMainThread)\n")
+//    print("Solution2Interactor fetchData")
+//    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let postsData = await worker.fetchRandomStuff()
     let posts = postsData.map {
@@ -38,8 +38,10 @@ final class Interactor: InteractorInput {
   }
 }
 
-struct Post {
-  let id: String
-  let title: String
-  let post: String
-}
+//extension Solution2Interactor {
+//  struct Post: Sendable {
+//    let id: String
+//    let title: String
+//    let post: String
+//  }
+//}

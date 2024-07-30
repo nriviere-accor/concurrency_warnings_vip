@@ -1,0 +1,21 @@
+Solution 4
+
+Postulat :
+@MainActor sur le presenter et pas dans le protocol
+Sendable sur le protocol du presenter
+Sendable sur les données ViewData, Data (Interactor)
+L'Interactor est un actor
+
+Résultat :
+@MainActor nécessaire dans la factory pour l'initialisation de Solution1View
+async obligatoire pour la définition de méthodes dans le protocol du Presenter
+Usage obligatoire du type concret dans la vue de l'interactor et du Presenter
+
+Analyse :
+@MainActor est présent sur le presenter, plus clair, moins sujet aux erreurs
+-> recommandé par Apple
+https://developer.apple.com/videos/play/wwdc2022/110351 à 16min
+L'interactor est un actor, pas d'appel concurrent à ses méthodes ou a son référentiel de données
+
+
+Solution 4 : 0 warning ✅

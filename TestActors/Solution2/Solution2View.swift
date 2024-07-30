@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct ContentView: View {
-  let interactor: Interactor
-  @StateObject var presenter: Presenter
+struct Solution2View: View {
+  let interactor: Solution2Interactor
+  @StateObject var presenter: Solution2Presenter
 
     var body: some View {
-      ContentViewBody(posts: presenter.posts)
+      Solution2ViewContentBody(posts: presenter.posts)
         .task {
           await interactor.fetchData()
         }
     }
 }
 
-struct ContentViewBody: View {
-  let posts: [Presenter.PostLightViewData]
+struct Solution2ViewContentBody: View {
+  let posts: [Solution2Presenter.PostLightViewData]
   var body: some View {
     List(posts) { post in
       HStack {
@@ -33,8 +33,5 @@ struct ContentViewBody: View {
 }
 
 #Preview {
-  ContentViewBody(posts: [
-    .init(id: "1", title: "Test"),
-    .init(id: "2", title: "Test another title")
-  ])
+  Solution2ViewContentBody(posts: [.postLightViewData()])
 }

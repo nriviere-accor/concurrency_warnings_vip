@@ -1,0 +1,21 @@
+Solution 2
+
+Postulat :
+@MainActor sur le protocol du presenter
+Sendable sur les données ViewData, Data (Interactor)
+interactor est final
+
+Résultat :
+@MainActor nécessaire dans la factory pour l'initialisation de Solution1View
+Warning dans l'interactor pour le passage des données vers le Presenter (non-sendable)
+Warning dans le presenter pour réaliser le traitement lourd dans une tâche non MainThread
+async non obligatoire sur la méthode du présenter si pas de traitement asynchrone pour la présentation
+
+Analyse :
+@MainActor n'est pas du tout présent dans le presenter, gestion complétement implicite et non visible
+-> sujet aux erreurs
+
+Solution 1 : 3 warnings ❌
+interactor
+vue
+presenter

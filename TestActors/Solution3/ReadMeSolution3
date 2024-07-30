@@ -1,0 +1,19 @@
+Solution 3
+
+Postulat :
+@MainActor sur le presenter et pas dans le protocol
+Sendable sur les données ViewData, Data (Interactor)
+interactor est final
+
+Résultat :
+@MainActor nécessaire dans la factory pour l'initialisation de Solution1View
+async obligatoire sur la méthode du présenter
+
+Analyse :
+@MainActor est présent sur le presenter, plus clair, moins sujet aux erreurs
+-> recommandé par Apple d'utiliser @MainActor qui font du travail sur le thread UI
+https://developer.apple.com/videos/play/wwdc2022/110351 à 16min
+
+
+Solution 3 : 1 warning ❌
+vue

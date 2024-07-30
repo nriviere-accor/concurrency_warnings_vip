@@ -7,31 +7,35 @@
 
 import Foundation
 
-@MainActor
-protocol InteractorOutput: Sendable, AnyObject {
+protocol Solution1InteractorOutput {
+  @MainActor
   func format(posts: [Post]) async
+  // async non-obligatoire si pas de tâche asynchrone
 }
 
-final class Presenter: InteractorOutput, ObservableObject {
+final class Solution1Presenter: Solution1InteractorOutput, ObservableObject {
   @Published private(set) var posts: [PostLightViewData] = []
 
   init() {
     print("init \(self)")
   }
-
+  // @MainActor pas obligatoire
   func format(posts: [Post]) async {
-    print("presenter format")
-    print("isMainThread: \(Thread.current.isMainThread)\n")
+//    print("Solution1Presenter format")
+//    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let presentationReadyPosts = await heavyProcess(posts: posts)
     self.posts = presentationReadyPosts.map {
       PostLightViewData(id: $0.id, title: String($0.title[0...10]))
     }
+//    self.posts = posts.map {
+//      PostLightViewData(id: $0.id, title: String($0.title[0...10]))
+//    }
   }
 
   nonisolated func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
-    print("presenter heavy work")
-    print("isMainThread: \(Thread.current.isMainThread)\n")
+//    print("Solution1Presenter heavy work")
+//    print("isMainThread: \(Thread.current.isMainThread)\n")
     let postsLightViewData = posts.map {
       PostLightViewData(id: $0.id, title: String($0.title[0...10]))
     }
@@ -41,17 +45,38 @@ final class Presenter: InteractorOutput, ObservableObject {
   }
 
   deinit {
-    print("deinit \(self)")
+    print("deinit \(self)\n\n")
   }
 }
-extension Presenter {
-  struct PostLightViewData: Identifiable, Sendable {
+extension Solution1Presenter {
+  struct PostLightViewData: Identifiable, Sendable { // scoper ou non, il y a quand même un warning
     let id: String
     let title: String
     // let post: String
   }
 }
 
+extension Solution1Presenter.PostLightViewData {
+//extension PostLightViewData {
+  static func postLightViewData() -> Solution1Presenter.PostLightViewData {
+//  static func postLightViewData() -> PostLightViewData {
+    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+      .init(id: "", title: "")
+    } else {
+      fatalError("Should use this model only for previews")
+    }
+  }
+
+}
+
+//import SwiftUI
+//extension PreviewProvider {
+//  static func postLightViewData() -> Presenter.PostLightViewData { .init(id: "", title: "") }
+//}
+//
+//extension PreviewRegistry {
+//  static func postLightViewDataRegistery() -> Presenter.PostLightViewData { .init(id: "", title: "") }
+//}
 
 extension StringProtocol {
     subscript(offset: Int) -> Character { self[index(startIndex, offsetBy: offset)] }
