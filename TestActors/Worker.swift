@@ -9,8 +9,8 @@ import Foundation
 
 final class Worker: Sendable {
   func fetchRandomStuff() async -> [PostData] {
-//    print("worker format")
-//    print("isMainThread: \(Thread.current.isMainThread)\n")
+    print("worker format")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     do {
       let request = URLRequest(url: URL(string: "https://jsonplaceholder.typicode.com/posts")!)

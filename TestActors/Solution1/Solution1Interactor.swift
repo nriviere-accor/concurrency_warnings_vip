@@ -22,8 +22,8 @@ final class Solution1Interactor: Solution1InteractorInput {
   }
 
   func fetchData() async {
-//    print("Solution1Interactor fetchData")
-//    print("isMainThread: \(Thread.current.isMainThread)\n")
+    print("Solution1Interactor fetchData")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let postsData = await worker.fetchRandomStuff()
     let posts = postsData.map {

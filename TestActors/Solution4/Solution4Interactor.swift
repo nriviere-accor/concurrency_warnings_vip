@@ -24,8 +24,8 @@ struct Solution4Interactor: Solution4InteractorInput {
   }
 
   func fetchData() async {
-//    print("Solution4Interactor fetchData")
-//    print("isMainThread: \(Thread.current.isMainThread)\n")
+    print("Solution4Interactor fetchData")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let postsData = await worker.fetchRandomStuff()
     let posts = postsData.map {

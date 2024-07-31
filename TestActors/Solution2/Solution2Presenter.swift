@@ -20,8 +20,8 @@ final class Solution2Presenter: Solution2InteractorOutput, ObservableObject {
   }
 
   func format(posts: [Post]) async {
-//    print("Solution2Presenter format")
-//    print("isMainThread: \(Thread.current.isMainThread)\n")
+    print("Solution2Presenter format")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
 
     let presentationReadyPosts = await heavyProcess(posts: posts)
     self.posts = presentationReadyPosts.map {
@@ -33,8 +33,8 @@ final class Solution2Presenter: Solution2InteractorOutput, ObservableObject {
   }
 
   nonisolated func heavyProcess(posts: [Post]) async -> [PostLightViewData] {
-//    print("Solution2Presenter heavy work")
-//    print("isMainThread: \(Thread.current.isMainThread)\n")
+    print("Solution2Presenter heavy work")
+    print("isMainThread: \(Thread.current.isMainThread)\n")
     let postsLightViewData = posts.map {
       PostLightViewData(id: $0.id, title: String($0.title[0...10]))
     }
